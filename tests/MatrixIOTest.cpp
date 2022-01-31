@@ -9,7 +9,8 @@ using namespace Eigen;
 using namespace std;
 
 struct MatrixIOFixture {
-  MatrixIOFixture() {
+  MatrixIOFixture()
+  {
     fileToOpen = "../data/m3.csv";
     matrixSize = 3;
     expected = MatrixXd(3, 3);
@@ -25,12 +26,15 @@ struct MatrixIOFixture {
 
 BOOST_FIXTURE_TEST_SUITE(OpenDataTests, MatrixIOFixture, *boost::unit_test::tolerance(1e-12))
 
-BOOST_AUTO_TEST_CASE(m3) {
-  MatrixXd x;
-  x = matrixIO::openData(fileToOpen, matrixSize);
+BOOST_AUTO_TEST_CASE(m3)
+{
+  MatrixXd X;
+  X = matrixIO::openData(fileToOpen, matrixSize);
 
-  for (int i=0; i < matrixSize; i++) {
-    for(int j=0; j < matrixSize; j++) {
+  for (int i=0; i < matrixSize; i++)
+  {
+    for(int j=0; j < matrixSize; j++)
+    {
       BOOST_TEST(x(i,j) == expected(i,j));
     };
   };
