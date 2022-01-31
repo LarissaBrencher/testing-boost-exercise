@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(m3)
     {
         for (int j = 0; j < matrixSize; j++)
         {
-            BOOST_TEST(x(i, j) == expected(i, j));
+            BOOST_TEST(X(i, j) == expected(i, j));
         };
     };
 };
