@@ -1,43 +1,40 @@
 #define BOOST_TEST_DYN_LINK
 #include <Eigen/Dense>
 #include <boost/test/unit_test.hpp>
-#include <vector>
 #include <iostream>
+#include <vector>
 #include "matrixIO.hpp"
 
-using namespace Eigen;
 using namespace std;
+using namespace Eigen;
 
-struct MatrixIOFixture
-{
-    MatrixIOFixture()
-    {
-        fileToOpen = "../data/m3.csv";
-        matrixSize = 3;
-        expected = MatrixXd(3, 3);
-        expected << 0.680375, 0.59688, -0.329554, -0.211234, 0.823295, 0.536459, 0.566198,
-            -0.604897, -0.444451;
-    }
-
-    MatrixXd expected;
-    string fileToOpen;
-    int matrixSize;
+struct MatrixIOFixture {
+  MatrixIOFixture()
+  {
+    expected = MatrixXd(3, 3);
+    expected << 0.680375, 0.59688, -0.329554,
+        -0.211234, 0.823295, 0.536459,
+        0.566198, -0.604897, -0.444451;
+  }
+  MatrixXd expected;
 };
 
-BOOST_FIXTURE_TEST_SUITE(OpenDataTests, MatrixIOFixture, *boost::unit_test::tolerance(1e-12))
+BOOST_FIXTURE_TEST_SUITE(MatrixIOTests, MatrixIOFixture, *boost::unit_test::tolerance(1e-12))
 
-BOOST_AUTO_TEST_CASE(m3)
+BOOST_AUTO_TEST_CASE(openData)
 {
-    MatrixXd X;
-    X = matrixIO::openData(fileToOpen, matrixSize);
+  MatrixXd X;
+  X = matrixIO::openData("../data/m3.csv", 3);
 
-    for (int i = 0; i < matrixSize; i++)
-    {
-        for (int j = 0; j < matrixSize; j++)
-        {
-            BOOST_TEST(X(i, j) == expected(i, j));
-        };
-    };
-};
+  BOOST_TEST(X(0, 0) == expected(0, 0));
+  BOOST_TEST(X(0, 1) == expected(0, 1));
+  BOOST_TEST(X(0, 2) == expected(0, 2));
+  BOOST_TEST(X(1, 0) == expected(1, 0));
+  BOOST_TEST(X(1, 1) == expected(1, 1));
+  BOOST_TEST(X(1, 2) == expected(1, 2));
+  BOOST_TEST(X(2, 0) == expected(2, 0));
+  BOOST_TEST(X(2, 1) == expected(2, 1));
+  BOOST_TEST(X(2, 2) == expected(2, 2));
+}
 
 BOOST_AUTO_TEST_SUITE_END()
